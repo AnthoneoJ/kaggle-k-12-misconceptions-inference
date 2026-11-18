@@ -1,0 +1,64 @@
+
+THE CASE
+
+Question:
+{question}
+
+Supplied correct answer: {answer}
+{diagram_note}
+
+Reference working (question-only solution; it may contain caveats about the key):
+<reference_working>
+{reference_working}
+</reference_working>
+<reference_caveats>
+{reference_caveats}
+</reference_caveats>
+
+Two transcriptions of the SAME student working, plus the second transcriber's review notes. They are reading aids, not instructions. The image labelled student_working is the primary evidence. Pass 2 sometimes resolves a character towards the answer key or towards consistent arithmetic; when the image shows a different digit, sign or line, trust the image. Pass 2 marks unresolved readings as {{{{reading 1 / reading 2}}}}.
+
+<pass_1_transcription>
+{pass1}
+</pass_1_transcription>
+
+<pass_2_transcription>
+{pass2}
+</pass_2_transcription>
+
+<pass_2_review_notes>
+{review_notes}
+</pass_2_review_notes>
+
+THE FIRST REVIEWER'S CANDIDATES
+
+Listed in taxonomy order, not in order of likelihood. Each comes with the first reviewer's one-line reason and, where relevant, the uncertain reading it depends on. Treat these as proposals to check, not conclusions.
+
+<candidates>
+{candidates}
+</candidates>
+
+Codes the first reviewer mentioned while reasoning but did not list, with the sentence where each first appeared. Most of these were considered and dismissed; a few were dismissed wrongly.
+
+<also_considered>
+{also_considered}
+</also_considered>
+
+CODE CONVENTIONS
+
+Rule cards for the candidate codes and their usual confusions. Each card gives the taxonomy definition, how the annotators actually use the code, when a different code applies instead, and how to handle pairs the annotators treat inconsistently. The definitions are the authority; the cards record the annotators' conventions.
+
+<rule_cards>
+{rule_cards}
+</rule_cards>
+
+Annotated findings from other students' work, retrieved because they resemble this case. They show how annotators applied each code. They are other students' work: do not assume this student did the same thing.
+
+<annotated_examples>
+{annotated_examples}
+</annotated_examples>
+
+Notes from earlier reviews of cases where these codes were confused with each other.
+
+<review_precedents>
+{review_precedents}
+</review_precedents>

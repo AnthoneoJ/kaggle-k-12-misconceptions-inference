@@ -1,0 +1,16 @@
+# Competition data, pseudo-labels, transcriptions, weights and anything derived from train annotations must never be public.
+data/
+work/
+work_*/
+submission/
+private_artifacts/
+*.zip
+*.safetensors
+.env
+__pycache__/
+.ipynb_checkpoints/
+resources/corpus/library.jsonl
+resources/corpus/cards.json
+resources/corpus/partners.json
+resources/corpus/library_stats.json
+resources/reference/question_solution_cache.json

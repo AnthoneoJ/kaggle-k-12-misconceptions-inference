@@ -1,0 +1,12 @@
+# Installed by notebooks/00_setup_and_sanity.ipynb.
+# PyTorch is NOT listed on purpose: vllm pins the torch build it was compiled against and installs it. Listing torch here
+# can pull a different build and break vllm. Use a vllm release that supports Qwen3-VL and Qwen3.8.
+vllm>=0.11
+transformers>=4.57
+huggingface_hub>=0.34
+kaggle>=1.7
+pillow
+jupyterlab
+nbformat
+nbconvert
+ipykernel

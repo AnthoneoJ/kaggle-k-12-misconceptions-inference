@@ -1,0 +1,59 @@
+{
+  "_comment": "One entry per stage. hf_id values are Hugging Face repositories. thinking/effort are passed to the chat template.",
+  "pass1": {
+    "hf_id": "Qwen/Qwen3-VL-235B-A22B-Instruct",
+    "quantization": null,
+    "max_model_len": 16384,
+    "max_images": 1,
+    "chat_template_kwargs": {},
+    "temperature": 0.0, "top_p": 1.0, "top_k": -1,
+    "max_tokens": 16384,
+    "keep_reasoning": false
+  },
+  "pass2": {
+    "hf_id": "Qwen/Qwen3.8-Flash-Next",
+    "quantization": null,
+    "max_model_len": 49152,
+    "max_images": 2,
+    "chat_template_kwargs": {"enable_thinking": true, "reasoning_effort": "low"},
+    "temperature": 0.0, "top_p": 1.0, "top_k": -1,
+    "max_tokens": 32768,
+    "keep_reasoning": false
+  },
+  "pass3": {
+    "hf_id": "Qwen/Qwen3.8-Flash-Next",
+    "quantization": null,
+    "max_model_len": 49152,
+    "max_images": 1,
+    "chat_template_kwargs": {"enable_thinking": true, "reasoning_effort": "low"},
+    "temperature": 0.0, "top_p": 1.0, "top_k": -1,
+    "max_tokens": 32768,
+    "keep_reasoning": true
+  },
+  "stage1": {
+    "hf_id": "Qwen/Qwen3.8-27B",
+    "quantization": null,
+    "max_model_len": 98304,
+    "max_images": 2,
+    "chat_template_kwargs": {"enable_thinking": true, "reasoning_effort": "medium"},
+    "temperature": 1.0, "top_p": 0.95, "top_k": 20,
+    "max_tokens": 49152,
+    "keep_reasoning": true
+  },
+  "stage2": {
+    "hf_id": "Qwen/Qwen3.8-27B",
+    "quantization": null,
+    "max_model_len": 98304,
+    "max_images": 2,
+    "chat_template_kwargs": {"enable_thinking": true, "reasoning_effort": "low"},
+    "temperature": 1.0, "top_p": 0.95, "top_k": 20,
+    "max_tokens": 32768,
+    "keep_reasoning": true
+  },
+  "runtime": {
+    "seed": 0,
+    "gpu_memory_utilization": 0.90,
+    "chunk_size": 96,
+    "retry_rounds": 2
+  }
+}

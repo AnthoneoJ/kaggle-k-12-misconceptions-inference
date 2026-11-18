@@ -1,0 +1,38 @@
+{
+ "CARD_APPEND": {
+  "ANS-01": "**Ranking note (added after dev review):** A final answer that is missing or incomplete is ANS-01 even when every step shown is correct: the working stops at an intermediate value, the requested quantity or selection is never stated, or the value is not in the form the question requires (a count that must be a whole number left as a decimal). Rank ANS-01 above NONE in these cases. When the correct answer is written but not marked as the final answer, annotators code it both ways: put ANS-01 and NONE in places 1 and 2.",
+  "NONE": "**Ranking note (added after dev review):** NONE needs the requested final answer to be present. Correct steps that stop at an intermediate value, never state the requested quantity or selection, or leave a value in a form the question does not allow (a whole number was needed) are ANS-01, ranked above NONE. If the answer is written but not marked as the answer, keep NONE and ANS-01 in places 1 and 2.",
+  "ALG-02": "**Keep both (added after dev review):** ALG-02 and ALG-03 are close neighbours that annotators apply inconsistently to merging or operating on unlike terms. Pattern in the annotations: a constant and a variable term merged into one term (c + kx treated as (c + k)x) leans to ALG-02; operations across other non-like terms (different radicals or powers, such as 2x − x written as 2x², or terms with √5, √3 and a constant forced into one radical) can be coded either way. If one of them is your place 1, the other must be in your top 3.",
+  "ALG-03": "**Keep both (added after dev review):** ALG-02 and ALG-03 are close neighbours that annotators apply inconsistently to merging or operating on unlike terms. Pattern in the annotations: a constant and a variable term merged into one term (c + kx treated as (c + k)x) leans to ALG-02; operations across other non-like terms (different radicals or powers, such as 2x − x written as 2x², or terms with √5, √3 and a constant forced into one radical) can be coded either way. If one of them is your place 1, the other must be in your top 3.",
+  "ALG-06": "**Keep both (added after dev review):** ALG-06 with INT-04 when a term or factor moves across the equals sign and a sign-handling error is also present: put both in your top 3. Without any movement across the equals sign the code is INT-04, not ALG-06.",
+  "INT-04": "**Keep both (added after dev review):** ALG-06 with INT-04 when a term or factor moves across the equals sign and a sign-handling error is also present: put both in your top 3. Without any movement across the equals sign the code is INT-04, not ALG-06.",
+  "KPF-01": "**Versus FRM-01 (added after dev review):** A procedure or rule that belongs to the other concept is a swap, KPF-01, even if it is also executed wrongly: for example taking the highest prime powers (the LCM rule) when the question asks for the GCF, or the reverse. FRM-01 applies to errors inside the correct KPK/FPB procedure, or where no KPK/FPB concept is at issue. When it is unclear which concept the student meant, keep both in your top 3.",
+  "FRM-01": "**Versus KPF-01 (added after dev review):** a wrong formula or exponent rule that belongs to the other concept (the LCM rule used for a GCF question, or the reverse) is KPF-01, not FRM-01. Keep both in your top 3 when it is unclear."
+ },
+ "PARTNER_FRONT": {
+  "ALG-02": [
+   [
+    "ALG-03",
+    0
+   ]
+  ],
+  "ALG-03": [
+   [
+    "ALG-02",
+    0
+   ]
+  ],
+  "ALG-06": [
+   [
+    "INT-04",
+    0
+   ]
+  ],
+  "INT-04": [
+   [
+    "ALG-06",
+    0
+   ]
+  ]
+ }
+}
