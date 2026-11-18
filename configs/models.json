@@ -1,22 +1,48 @@
 {
-  "_comment": "One entry per stage. hf_id values are Hugging Face repositories. thinking/effort are passed to the chat template.",
+  "_comment": "One entry per stage. hf_id values are Hugging Face repositories. A stage may have a 'recovery' list: variants tried in order, only for rows that still fail after the normal retry rounds; 'overrides' replace sampling settings for those rows only.",
   "pass1": {
     "hf_id": "Qwen/Qwen3-VL-235B-A22B-Instruct",
     "quantization": null,
     "max_model_len": 16384,
     "max_images": 1,
     "chat_template_kwargs": {},
-    "temperature": 0.0, "top_p": 1.0, "top_k": -1,
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "top_k": -1,
     "max_tokens": 16384,
-    "keep_reasoning": false
+    "keep_reasoning": false,
+    "recovery": [
+      {
+        "name": "sampling",
+        "overrides": {
+          "temperature": 0.7,
+          "top_p": 0.8,
+          "max_tokens": 6000
+        }
+      },
+      {
+        "name": "repetition_penalty",
+        "overrides": {
+          "temperature": 0.7,
+          "top_p": 0.8,
+          "repetition_penalty": 1.1,
+          "max_tokens": 1500
+        }
+      }
+    ]
   },
   "pass2": {
     "hf_id": "Qwen/Qwen3.8-Flash-Next",
     "quantization": null,
     "max_model_len": 49152,
     "max_images": 2,
-    "chat_template_kwargs": {"enable_thinking": true, "reasoning_effort": "low"},
-    "temperature": 0.0, "top_p": 1.0, "top_k": -1,
+    "chat_template_kwargs": {
+      "enable_thinking": true,
+      "reasoning_effort": "low"
+    },
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "top_k": -1,
     "max_tokens": 32768,
     "keep_reasoning": false
   },
@@ -25,8 +51,13 @@
     "quantization": null,
     "max_model_len": 49152,
     "max_images": 1,
-    "chat_template_kwargs": {"enable_thinking": true, "reasoning_effort": "low"},
-    "temperature": 0.0, "top_p": 1.0, "top_k": -1,
+    "chat_template_kwargs": {
+      "enable_thinking": true,
+      "reasoning_effort": "low"
+    },
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "top_k": -1,
     "max_tokens": 32768,
     "keep_reasoning": true
   },
@@ -35,8 +66,13 @@
     "quantization": null,
     "max_model_len": 98304,
     "max_images": 2,
-    "chat_template_kwargs": {"enable_thinking": true, "reasoning_effort": "medium"},
-    "temperature": 1.0, "top_p": 0.95, "top_k": 20,
+    "chat_template_kwargs": {
+      "enable_thinking": true,
+      "reasoning_effort": "medium"
+    },
+    "temperature": 1.0,
+    "top_p": 0.95,
+    "top_k": 20,
     "max_tokens": 49152,
     "keep_reasoning": true
   },
@@ -45,14 +81,19 @@
     "quantization": null,
     "max_model_len": 98304,
     "max_images": 2,
-    "chat_template_kwargs": {"enable_thinking": true, "reasoning_effort": "low"},
-    "temperature": 1.0, "top_p": 0.95, "top_k": 20,
+    "chat_template_kwargs": {
+      "enable_thinking": true,
+      "reasoning_effort": "low"
+    },
+    "temperature": 1.0,
+    "top_p": 0.95,
+    "top_k": 20,
     "max_tokens": 32768,
     "keep_reasoning": true
   },
   "runtime": {
     "seed": 0,
-    "gpu_memory_utilization": 0.90,
+    "gpu_memory_utilization": 0.9,
     "chunk_size": 96,
     "retry_rounds": 2
   }

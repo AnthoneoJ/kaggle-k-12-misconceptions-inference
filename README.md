@@ -62,7 +62,33 @@ After a smoke test, notebook 06 fills the rows without model output with `NONE`;
 
 - Passes 1-3 use temperature 0. Stages 1-2 are sampled (temperature 1.0, top-p 0.95, top-k 20, seed 0). vLLM batching is not bit-deterministic, so reruns differ in some rows.
 - Thinking is switched on through the chat-template keywords in `configs/models.json` (`enable_thinking`, `reasoning_effort`). Notebook 00 prints the rendered templates; if a template ignores a keyword, edit it there.
+- If a call fails, it is retried with identical settings (`retry_rounds`), then with the optional recovery variants of that stage; see "If rows fail". A row that still fails is left without a record, and the submission builder falls back (stage 2, then stage 1, then `NONE`).
 - Every stage writes one JSON record per row under `work/<stage>/records`, so an interrupted run resumes where it stopped.
+
+## If rows fail
+
+Which rows fail depends on the hardware and the library versions, so the pipeline retries by itself and lets you change the settings for the failed rows only.
+
+1. **Find them.** `work/<stage>/summary.json` lists `failed_rows`. The record `work/<stage>/records/<trace_id>.json` of a failed row has an `error` field.
+2. **Automatic retries.** A failed row is retried with identical settings (`retry_rounds` in `configs/models.json`). Rows that still fail are then tried with each entry of that stage's `recovery` list, in order, and the first answer that parses is kept. A row saved this way has a `recovery_variant` field in its record, and `summary.json` counts them under `recovered_with_variant`.
+3. **Change the recovery settings.** In `configs/models.json`, add or edit variants for a stage. `overrides` may set `temperature`, `top_p`, `top_k`, `max_tokens`, `repetition_penalty`, `min_p`, `presence_penalty` and `frequency_penalty`; everything else stays as configured for the stage.
+
+```json
+"stage2": { "...": "...", "recovery": [
+  {"name": "warmer", "overrides": {"temperature": 0.7, "top_p": 0.8}},
+  {"name": "short", "overrides": {"temperature": 0.7, "top_p": 0.8, "repetition_penalty": 1.1, "max_tokens": 4000}} ] }
+```
+
+   Pass 1 ships with two variants. Pass 1 runs at temperature 0, so a row that loops until the token cap loops again when retried unchanged, and the variants change the sampling.
+4. **Re-run the notebook.** Finished rows are skipped, so only the failed rows are processed.
+
+| Symptom (the `error` of the record) | What to change |
+|---|---|
+| `Incomplete response: length` (the output hit `max_tokens`, often a loop) | add a `recovery` variant as above, or raise `max_tokens` (keep it below `max_model_len`) |
+| Parse error on a finished answer | re-run the stage (stages 1 and 2 are sampled), or add a `recovery` variant with another `temperature` |
+| Out of memory, or the engine does not start | lower `gpu_memory_utilization` or `chunk_size` in `runtime`, or `max_model_len` for the stage |
+
+**Do not edit a stage's own settings** (`temperature`, `max_tokens`, `chat_template_kwargs`, the prompt) after rows are finished. Those settings are part of each record's signature, so every finished row of that stage would be run again. Put the change in `recovery` so that only the failed rows are affected.
 
 ## Models and licences
 

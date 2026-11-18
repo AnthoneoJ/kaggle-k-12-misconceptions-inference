@@ -69,10 +69,11 @@ class VLLMBackend:
         kw.update(spec.get('vllm_extra', {}))
         self.llm = LLM(**kw)
 
-    def generate(self, requests):
+    def generate(self, requests, overrides=None):
         from vllm import SamplingParams
-        s = self.spec
-        sp = SamplingParams(temperature=s['temperature'], top_p=s['top_p'], top_k=s['top_k'], max_tokens=s['max_tokens'])
+        s = {**self.spec, **(overrides or {})}   # overrides: sampling settings for one recovery attempt (see README, 'If rows fail')
+        extra = {k: s[k] for k in ('repetition_penalty', 'min_p', 'presence_penalty', 'frequency_penalty') if k in s}
+        sp = SamplingParams(temperature=s['temperature'], top_p=s['top_p'], top_k=s['top_k'], max_tokens=s['max_tokens'], **extra)
         outs = self.llm.chat([r['messages'] for r in requests], sampling_params=sp, use_tqdm=True,
                              chat_template_kwargs=s.get('chat_template_kwargs') or None)
         thinking = bool((s.get('chat_template_kwargs') or {}).get('enable_thinking'))
@@ -101,7 +102,7 @@ class MockBackend:
     def __init__(self, spec, runtime, stage):
         self.stage = stage
 
-    def generate(self, requests):
+    def generate(self, requests, overrides=None):
         out = []
         for r in requests:
             if self.stage == 'pass1':
@@ -131,8 +132,8 @@ class Engine:
         else:
             self.backend = VLLMBackend(self.spec, self.runtime)
 
-    def generate(self, requests):
-        return self.backend.generate(requests)
+    def generate(self, requests, overrides=None):
+        return self.backend.generate(requests, overrides)
 
     def close(self):
         self.backend.close()
